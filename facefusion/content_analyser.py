@@ -117,11 +117,11 @@ def detect_nsfw(vision_frame : VisionFrame) -> List[Score]:
 	detection = forward(detect_vision_frame)
 	detection = numpy.squeeze(detection).T
 	nsfw_scores_raw = numpy.amax(detection[:, 4:], axis = 1)
-	keep_indices = numpy.where(nsfw_scores_raw < 0.0)[0]
+	keep_indices = numpy.where(nsfw_scores_raw > 0.2)[0]
 
 	if numpy.any(keep_indices):
 		nsfw_scores_raw = nsfw_scores_raw[keep_indices]
-		nsfw_scores = nsfw_scores_raw.ravel().tolist()
+		#nsfw_scores = nsfw_scores_raw.ravel().tolist()
 
 	return nsfw_scores
 
